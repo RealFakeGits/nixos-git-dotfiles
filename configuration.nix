@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-stable, ... }:
 {
     imports =
       [ # Include the results of the hardware scan.
@@ -104,8 +104,9 @@
 #    virtualisation.libvirtd.enable = true;
     virtualisation.vmware.host = {
       enable = true;
-      package = pkgs.vmware-workstation;
+      package = pkgs-stable.vmware-workstation;
     };
+
     programs.dconf.enable = true;
 
   # Enable sound.

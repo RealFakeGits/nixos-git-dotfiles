@@ -4,10 +4,7 @@
    
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
-#    overlays =  [
-#      import ./overlays/overlays.nix 
-#    ];
+    nixpkgs-stable.url = "github:nixos/nixpkgs/1bde3e8e37a72989d4d455adde764d45f45dc11c";    
      
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,28 +12,33 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixpkgs-stable, ... }: 
     let 
       lib = nixpkgs.lib;
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system}; 
-#      pkgsWithOverlays = import nixpkgs {
-#        overlays = [ overlays ];
-#      };
+      pkgs = nixpkgs.legacyPackages.${system};
     in {
       nixosConfigurations = {
         bingbong = lib.nixosSystem {
-          inherit system;
-          modules = [ ./configuration.nix ];
+        specialArgs = {
+          pkgs-stable = import nixpkgs-stable { 
+            inherit system;
+            config.allowUnfree = true;
+          };
+        };
+          modules = [
+            ./configuration.nix 
+          ];
         };
       };
       homeConfigurations = {
         cbrazell = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [ 
+            ./home.nix 
+          ];
         };
       };
-#    packages.x86_64-linux.vmware-workstation = pkgsWithOverlays.vmware-workstation;
     };
   
 }

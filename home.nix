@@ -19,14 +19,15 @@
       "openssl-1.1.1w"
     ];
   };
-  programs.git = {
-    enable = true;
-    userName = "RealFakeGits";
-    userEmail = "realfakeemailshere82@gmail.com";
-    extraConfig = {
-      init.defaultBranch = "main";
+   programs.git = {
+      enable = true;
+      userName = "RealFakeGits";
+      userEmail = "realfakeemailshere82@gmail.com";
+      extraConfig = {
+        init.defaultBranch = "main";
+      };
     };
-  };
+ 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -128,7 +129,7 @@
   #  /etc/profiles/per-user/cbrazell/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+     EDITOR = "neovim";
   };
 
   # Let Home Manager install and manage itself.

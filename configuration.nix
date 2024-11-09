@@ -1,40 +1,14 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running `nixos-help`).
-
 { config, pkgs, ... }:
-#let
-#  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
-
-#  hyprland = (import flake-compat {
-#    src = builtins.fetchTarball "https://github.com/hyprwm/Hyprland/archive/master.tar.gz";
-#  }).defaultNix;
-#in {
-#  imports = [hyprland.nixosModules.default];
-
-#  programs.hyprland = {
-#    enable = true;
-
-    # default options, you don't need to set them
-#    package = pkgs.hyprland;
-
-#    xwayland = {
-#      enable = true;
-#      hidpi = true;
-#    };
-
-#    nvidiaPatches = false;
-#  };
-#}
-    
-
 {
     imports =
       [ # Include the results of the hardware scan.
         ./hardware-configuration.nix
       #  ./waybar.nix
       ];
-
+   
+#    overlays = [
+#      import ./overlay/overlays.nix
+#    ];
 
   # Kernel Manual setting for compatibility for DX games
    # boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_1;
@@ -48,24 +22,13 @@
     boot.loader.efi.canTouchEfiVariables = true;
 
     networking.hostName = "bingbong"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
     time.timeZone = "America/Chicago";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkbOptions in tty.
-  #  };
 
   # Greetd login manager
    services.greetd = {
@@ -87,27 +50,10 @@
    services.displayManager.sddm = {
 	wayland.enable = true;
    };
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-  #  services.xserver = {
-  #    enable = true;
-  #    xkb.layout = "us";
-  #    xkb.variant = "";
-  # };
-  
 
   # NixOS Garbage Collection
     nix.optimise.automatic = true;
     nix.optimise.dates = [ "03:45" ];
-
-  
-  # Printer
-#    services.printing.enable = true;
-#    services.avahi = {
-#      enable = true;
-#      nssmdns4 = true;
-#      openFirewall = true;
-#    };
           
   # Thunar compatability    
     services.gvfs.enable = true; # Mount, Trash, and other functionalites
@@ -137,13 +83,6 @@
         gamescopeSession.enable = true;
         enable = true;
       }; 
-  # Hyprland Enable
-
-  #  hyprland = {
-  #    enable = true;
-  #    xwayland.enable = true;
-  #  };
-  #  waybar.enable = true;
   
 
   # Sway Enable
@@ -157,23 +96,17 @@
       graphics = {
         enable = true;
         enable32Bit = true;
-        #extraPackages = with pkgs; [
-        #  amdvlk
-        #];
-        #extraPackages32 = with pkgs; [
-        #  driversi686Linux.amdvlk
-        #]; 
       };
     };
 
   # Virt-manager
     
 #    virtualisation.libvirtd.enable = true;
-    virtualisation.vmware.host.enable = true;
+    virtualisation.vmware.host = {
+      enable = true;
+      package = pkgs.vmware-workstation;
+    };
     programs.dconf.enable = true;
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e,caps:escape";
 
   # Enable sound.
     security.rtkit.enable = true;
@@ -186,15 +119,6 @@
       jack.enable = true;
       pulse.enable = true;
     };
-  # Zerotier
-#    services.zerotierone = {
-#      enable = true;
-#      joinNetworks = [ "b6079f73c6de08a1" ];
-#    };
-  
-
-  # PCSCD - Smart Card Reader
-  #  services.pcscd.enable = true;  
 
   # Locate command  
     services.locate = {
@@ -202,25 +126,18 @@
       package = pkgs.mlocate;
       localuser = null;
     };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # User Account
     users.users.cbrazell = {
       isNormalUser = true;
       extraGroups = [ "wheel" "corectrl" "libvirtd" ]; # Enable ‘sudo’ for the user.
       packages = with pkgs; [
         tree
-      # steam
-      # spotify
-      # discord
       ];
-    };
+    }; 
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-    environment.systemPackages = with pkgs; [
+  # System Wide Pkgs
+    environment.systemPackages = [
+       
 #      wgnord
 #      gcc
 #      kitty
@@ -275,20 +192,9 @@
       #busybox
     ];
 
-  # Fonts for system    
-#    fonts = {
-#      fontDir.enable = true;
-#      packages = with pkgs; [
-#       (nerdfonts.override { fonts = [ "Iosevka" "JetBrainsMono" ]; })
-#      ];
-#    };
-
   # Temperature Controller
     programs.corectrl.enable = true;
 
-  # This is for VMM to fix the cursor bug for making VMs
-
- 
   # PAM Swaylock Auth
     security.pam.services.swaylock = {};
     #console.packages=[ pkgs.iosevka ];
@@ -303,8 +209,6 @@
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -327,15 +231,19 @@
 
   # Overlays Go here
 #    nixpkgs.overlays = [
-#      (self: super: {
-#         vmware-workstation = super.vmware-workstation.overrideAttrs (
-#           _: { src = prev.fetchFromGithub { 
-#	     owner = "
-# 	     repo = 
-#             url = "https://github.com/NixOS/nixpkgs/archive/47c1824c261a343a6acca36d168a0a86f0e66292.tar.gz";
-#             }; }
-#             );
-#           })
+      
+#      (final: prev: {
+#         vmware-workstation = prev.vmware-workstation.overrideAttrs (
+#           old: { src = prev.fetchFromGitHub {
+#             owner = "nixos";
+#             repo = "nixpkgs-unstable";
+#             rev = "1bde3e8e37a72989d4d455adde764d45f45dc11c";
+#             sha256 = "duwsp94fJWmsSb48ApjQKmTKW5Tzvd8f4Hd44Ge/P5Y=";
+#           }; }
+#         );
+#       })
+#     ];    
+
 #     (self: super: { 
 #	 discord = super.discord.overrideAttrs (
 #	   _: { src = builtins.fetchTarball {

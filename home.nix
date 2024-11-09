@@ -4,6 +4,8 @@
 
   imports = [
     ./kitty.nix
+    ./vim.nix
+    ./sway.nix
   ];
 
 
@@ -40,32 +42,30 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "Iosevka" "JetBrainsMono" ]; })
+      (nerdfonts.override { fonts = [ "Iosevka" "IBMPlexMono" ]; })
       wgnord
       gcc
-      kitty
       wget
       git
       protonup-qt
       waybar
-      pavucontrol
+#      pavucontrol
       google-chrome
-      firefox-wayland
+#      firefox-wayland
       rofi-wayland
       neofetch
       steam
       vesktop
       spotify
-      vim
       qimgv
-      pamixer
+#      pamixer
       prismlauncher
       htop
       obsidian
       google-drive-ocamlfuse
-      grim
-      wl-clipboard
-      slurp
+#      grim
+#      wl-clipboard
+#      slurp
       photoflare
       neovim
       gtk4
@@ -108,7 +108,7 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
 #    ".config/kitty/kitty.conf".source = ./kitty/kitty.conf;
-    
+    ".config/sway/config".source = ./config; 
   };
 
   # Home Manager can also manage your environment variables through
@@ -128,7 +128,7 @@
   #  /etc/profiles/per-user/cbrazell/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-     EDITOR = "neovim";
+     EDITOR = "vim";
   };
 
   # Let Home Manager install and manage itself.

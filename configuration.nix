@@ -88,7 +88,7 @@
   # Sway Enable
     sway = {
       enable = true;
-      wrapperFeatures.gtk = true;
+      package = null;
       };
     };
   # Vulkan Support 32/64Bit

@@ -1,40 +1,39 @@
-{ config, pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
 
-    extraConfig = [
-      "default_border pixel 2"
-    ];
+#    extraConfig = {
+#      "default_border pixel 2"
+#    };
 
     config = rec {
-      input = {
-        xkb_numlock = "enabled";
-      };
+     # input = {
+     #   xkb_numlock = "Enabled";
+     # };
 
-      left = Left;
-      right = Right;
-      up = Up;
-      down = Down;
+#      left = "a" ;
+#      right = "d" ;
+#      up = "w";
+#      down = "s";
       
       bars = [
         { "command" = "waybar"; }
       ];
 
-      menu = {
-        "set $menu rofi -show drun | xargs swaymsg exec --"
-      };
+      menu = " set $menu rofi -show drun | xargs swaymsg exec -- ";
+      
 
       output = {
         DP-1 = {
-          bg = "~/Photos/wallpaper.png fill";
+          bg = "./wallpaper.png fill";
           position = "0 0";
           resolution = "2560x1400";
         };
 
         DP-2 = {
-          bg = "~/Photos/wallpaper.png fill";
+          bg = "./wallpaper.png fill";
           position = "2560 0";
           resolution = "2560x1400";
         };
@@ -51,29 +50,24 @@
         { command = "google-chrome-stable"; always = true;}
         { command = "vesktop"; always = true; }
       ];
-
-      keybindings = {
-        let
-          modifier = config.wayland.windowManager.sway.config.modifier;
-        in lib.mkOptionDefault {
-          "Print" = '' exec grim -g "${slurp -d}" | wl-copy ''
-          "${modifier}+f" = '' exec google-chrome-stable ''
-          "${modifier}+e" = '' exec thunar '';
-          "${modifier}+c" = '' kill '';
-          "${modifier}+q" = '' exec ${terminal} ''; 
-          "${modifier}+r" = '' exec ${menu} '';
-          "${modifier}+m" = '' reload '';
-          "${modifier}+Shift+m" = " exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit' ";
-        };
-
+      keybindings = pkgs.lib.mkOptionDefault {
+#        "Print" = '' exec grim -g "${slurp -d}" | wl-copy '';
+        "${modifier}+f" = '' exec google-chrome-stable '';
+        "${modifier}+e" = '' exec thunar '';
+        "${modifier}+c" = '' kill '';
+        "${modifier}+q" = '' exec ${terminal} ''; 
+        "${modifier}+r" = '' exec ${menu} '';
+        "${modifier}+m" = '' reload '';
+        "${modifier}+Shift+m" = " exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit' ";
       };
 
+
       gaps = {
-        smartBorders = true;
+        smartBorders = "on";
       };
 
       window = {
-        hideEdgeBorders = true;
+        hideEdgeBorders = "both";
       };
 
       workspaceOutputAssign = [

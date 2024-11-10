@@ -108,7 +108,7 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
 #    ".config/kitty/kitty.conf".source = ./kitty/kitty.conf;
-    ".config/sway/config".source = ./config; 
+#    ".config/sway/config".source = ./config; 
   };
 
   # Home Manager can also manage your environment variables through

@@ -3,7 +3,7 @@
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-
+    checkConfig = false;
 #    extraConfig = {
 #      "default_border pixel 2"
 #    };
@@ -27,13 +27,13 @@
 
       output = {
         DP-1 = {
-          bg = "./wallpaper.png fill";
+          bg = "/home/cbrazell/.dotfiles/wallpaper.png fill";
           position = "0 0";
           resolution = "2560x1400";
         };
 
         DP-2 = {
-          bg = "./wallpaper.png fill";
+          bg = "/home/cbrazell/.dotfiles/wallpaper.png fill";
           position = "2560 0";
           resolution = "2560x1400";
         };
@@ -44,11 +44,11 @@
       terminal = "kitty";
 
       startup = [
-        { command = "spotify"; always = true; }
-        { command = "slack"; always = true; }
-        { command = "steam"; always = true; }
-        { command = "google-chrome-stable"; always = true;}
-        { command = "vesktop"; always = true; }
+        { command = "spotify"; }
+        { command = "slack"; }
+        { command = "steam"; }
+        { command = "google-chrome-stable"; }
+        { command = "vesktop"; }
       ];
       keybindings = pkgs.lib.mkOptionDefault {
 #        "Print" = '' exec grim -g "${slurp -d}" | wl-copy '';
@@ -68,6 +68,7 @@
 
       window = {
         hideEdgeBorders = "both";
+        titlebar = false;
       };
 
       workspaceOutputAssign = [

@@ -27,7 +27,7 @@
           };
         };
           modules = [
-            ./configuration.nix 
+            ./configuration.nix
           ];
         };
       };

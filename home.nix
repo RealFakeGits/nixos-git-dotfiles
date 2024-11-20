@@ -4,8 +4,9 @@
 
   imports = [
     ./kitty.nix
-    ./vim.nix
+    ./neovim.nix
     ./sway.nix
+    ./fonts.nix
   ];
 
 
@@ -21,6 +22,11 @@
       "openssl-1.1.1w"
     ];
   };
+
+  services = {
+    swayidle.enable = true; # Lock screen
+  };
+
    programs.git = {
       enable = true;
       userName = "RealFakeGits";
@@ -42,7 +48,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "Iosevka" "IBMPlexMono" ]; })
       wgnord
       gcc
       wget
@@ -67,7 +72,7 @@
 #      wl-clipboard
 #      slurp
       photoflare
-      neovim
+#      neovim
       gtk4
       corectrl
       qalculate-gtk
@@ -83,7 +88,8 @@
       zip
       unzip
       sublime4
-      swaylock-effects
+#      swayidle
+#      swaylock-effects
       gamescope
       killall
       wine
@@ -110,6 +116,14 @@
 #    ".config/kitty/kitty.conf".source = ./kitty/kitty.conf;
 #    ".config/sway/config".source = ./config; 
   };
+  
+
+
+
+
+
+
+
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
@@ -128,7 +142,7 @@
   #  /etc/profiles/per-user/cbrazell/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-     EDITOR = "vim";
+     EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.

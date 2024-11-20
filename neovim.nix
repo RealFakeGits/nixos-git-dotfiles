@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 {
-  programs.vim = {
+  programs.neovim = {
     enable = true;
+    vimAlias = true;
     defaultEditor = true;
     extraConfig = ''
       let mapleader = ","
@@ -25,5 +26,8 @@
       map <leader>ss :setlocal spell!<cr>
       map <leader>pp :setlocal paste!<cr>
     '';
+    plugins = with pkgs.vimPlugins; [
+
+    ];
   };
 }

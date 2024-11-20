@@ -22,7 +22,7 @@
         { "command" = "waybar"; }
       ];
 
-      menu = " set $menu rofi -show drun | xargs swaymsg exec -- ";
+      menu = " rofi -show drun | xargs swaymsg exec -- ";
       
 
       output = {
@@ -50,8 +50,8 @@
         { command = "google-chrome-stable"; }
         { command = "vesktop"; }
       ];
-      keybindings = pkgs.lib.mkOptionDefault {
-#        "Print" = '' exec grim -g "${slurp -d}" | wl-copy '';
+      keybindings = lib.mkOptionDefault {
+        "Print" = " exec slurp -d | grim -g - - | wl-copy ";
         "${modifier}+f" = '' exec google-chrome-stable '';
         "${modifier}+e" = '' exec thunar '';
         "${modifier}+c" = '' kill '';
@@ -59,6 +59,7 @@
         "${modifier}+r" = '' exec ${menu} '';
         "${modifier}+m" = '' reload '';
         "${modifier}+Shift+m" = " exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit' ";
+        "${modifier}+l" = '' exec swayidle -w timeout 300 'swaylock -f -c 000000' timout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' before-sleep 'swaylock -f -c 000000' '';
       };
 
 
@@ -66,9 +67,10 @@
         smartBorders = "on";
       };
 
-      window = {
+      window = { 
         hideEdgeBorders = "both";
         titlebar = false;
+        border = 4;
       };
 
       workspaceOutputAssign = [
@@ -81,7 +83,7 @@
         { workspace = "7"; output = "DP-2"; }
         { workspace = "8"; output = "DP-2"; }
         { workspace = "9"; output = "DP-2"; }
-        { workspace = "0"; output = "DP-2"; }
+        { workspace = "10"; output = "DP-2"; }
 
 
       ];
@@ -93,7 +95,8 @@
     grim
     slurp
     pamixer
-    pavucontrol 
+    pavucontrol
+    swaylock-effects
   ];
   
 

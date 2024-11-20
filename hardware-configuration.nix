@@ -31,6 +31,21 @@
     { device = "/dev/disk/by-uuid/e02a9db7-2afc-447e-9bec-04dea41bae24";
       fsType = "btrfs";
     };
+#  fileSystems."/home/cbrazell/IronOxide1TB" =
+#    { device = "/dev/disk/by-uuid/0036727036726716";
+#      fsType = "none";
+#      options = [
+#        "ro"
+#      ];
+#    };
+#  fileSystems."/home/cbrazell/IronOxide2TB" =
+#   { device = "/dev/disk/by-uuid/386696D56696936C";
+#     fsType = "none";
+#     options = [
+#       "ro"
+#     ];
+#   };
+
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/825eff26-fe4d-4991-8941-9381ec870a91"; }

@@ -11,7 +11,17 @@
 #    ];
 
   # Kernel Manual setting for compatibility for DX games
-   # boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_1;
+   boot.kernelPackages = pkgs.linuxPackages_latest;
+#  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_6_6.override {
+#	  argsOverride = rec {
+#		  src = pkgs.fetchurl {
+#              	url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+#              	sha256 = "59+B5YjXD6tew+w7sErFPVHwhg/DsexF4KQWegJomds=";
+#	    };
+#	    version = "6.6.58";
+#	    modDirVersion = "6.6.58";
+#	  };
+#  });
 
   # Use the systemd-boot EFI boot loader.
     boot.loader.systemd-boot = {
@@ -88,9 +98,9 @@
   # Sway Enable
     sway = {
       enable = true;
-      package = null;
-      };
-    };
+      package = null; # Because home-manager is user space, we need sway here for sddm 
+      };              # to be able to see it. So enable sway in home-manager/here and make
+    };                # the package null here so it loads the home-manager config.
   # Vulkan Support 32/64Bit
     hardware = {
       graphics = {
@@ -104,7 +114,7 @@
 #    virtualisation.libvirtd.enable = true;
     virtualisation.vmware.host = {
       enable = true;
-      package = pkgs-stable.vmware-workstation;
+     # package = pkgs-stable.vmware-workstation;
     };
 
     programs.dconf.enable = true;
@@ -138,7 +148,6 @@
 
   # System Wide Pkgs
     environment.systemPackages = [
-       
 #      wgnord
 #      gcc
 #      kitty

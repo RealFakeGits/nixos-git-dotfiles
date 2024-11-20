@@ -2,7 +2,7 @@
 {
   programs.kitty = {
     enable = true;
-    font.name = "IBMPlexMono";
+    font.name = "BlexMonoNerdFontMono";
     themeFile = "Darkside";
   };
 }

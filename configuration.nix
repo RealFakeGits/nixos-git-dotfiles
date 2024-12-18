@@ -33,6 +33,10 @@
 
     networking.hostName = "bingbong"; # Define your hostname.
     networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  
+
+  # Tailscale setup
+    services.tailscale.enable = true;
 
   # Set your time zone.
     time.timeZone = "America/Chicago";

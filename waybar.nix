@@ -179,8 +179,7 @@
           format-icons = {
             headphones = "";
             default = [
-              ""
-              ""
+              "Vol:"
             ];
           };
           scroll-step = 5;

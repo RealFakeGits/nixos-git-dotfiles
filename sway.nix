@@ -52,7 +52,8 @@
       ];
       keybindings = lib.mkOptionDefault {
         "Print" = " exec slurp -d | grim -g - - | wl-copy ";
-        "${modifier}+f" = '' exec google-chrome-stable '';
+        "Shift+Print" = '' exec wf-recorder -g "$(slurp)" '';
+        "${modifier}+f" = '' exec brave '';
         "${modifier}+e" = '' exec thunar '';
         "${modifier}+c" = '' kill '';
         "${modifier}+q" = '' exec ${terminal} ''; 

@@ -28,13 +28,14 @@
       enable = true;
       configurationLimit = 5;
     };
-
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
     boot.loader.efi.canTouchEfiVariables = true;
 
     networking.hostName = "bingbong"; # Define your hostname.
     networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   
-
+  # Smart Card
+    services.pcscd.enable = true;
   # Tailscale setup
     services.tailscale.enable = true;
 
@@ -62,7 +63,7 @@
    '';
 
    services.displayManager.sddm = {
-	wayland.enable = true;
+     wayland.enable = true;
    };
 
   # NixOS Garbage Collection
@@ -89,7 +90,12 @@
         "openssl-1.1.1w"
       ];
     };  
-  
+ 
+  # SSH Enable
+  #  services.openssh = {
+  #    enable = true;
+  #  };
+
   # Steam Enable
     programs = {
       gamemode.enable = true;
@@ -101,6 +107,7 @@
 
   # Sway Enable
     sway = {
+      xwayland.enable = true;
       enable = true;
       package = null; # Because home-manager is user space, we need sway here for sddm 
       };              # to be able to see it. So enable sway in home-manager/here and make

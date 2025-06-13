@@ -16,6 +16,20 @@
   # manage.
   home.username = "cbrazell";
   home.homeDirectory = "/home/cbrazell";
+  home.pointerCursor = {
+#    sway.enable = true;
+#    x11.enable = true;
+    name = "adwaita-icon-theme";
+    package = pkgs.adwaita-icon-theme;
+    size = 32;
+  };
+
+  gtk.cursorTheme = {
+    name = "adwaita-icon-theme";
+    package = pkgs.adwaita-icon-theme;
+    size = 32;
+
+  };
   nixpkgs.config = {
     allowUnfreePredicate = _: true;
     permittedInsecurePackages = [
@@ -50,7 +64,11 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+      p11-kit
+      opensc
       wgnord
+      ffmpeg
+      wf-recorder
       gcc
       wget
       git
@@ -58,6 +76,7 @@
       waybar
 #      pavucontrol
       google-chrome
+      brave
 #      firefox-wayland
       rofi-wayland
       neofetch
@@ -69,7 +88,7 @@
       prismlauncher
       htop
       obsidian
-      google-drive-ocamlfuse
+#      google-drive-ocamlfuse
 #      grim
 #      wl-clipboard
 #      slurp
@@ -80,7 +99,7 @@
       qalculate-gtk
       gamescope
       openvpn
-      adwaita-icon-theme #default cursors
+#      adwaita-icon-theme #default cursors
       glib 
       evince
       wireshark
@@ -94,7 +113,7 @@
 #      swaylock-effects
       gamescope
       killall
-      wine
+      wine64
       libreoffice
       mangohud
       protontricks

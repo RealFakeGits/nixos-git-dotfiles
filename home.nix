@@ -7,6 +7,7 @@
     ./neovim.nix
     ./sway.nix
     ./fonts.nix
+    ./waybar.nix
   ];
 
 
@@ -27,14 +28,15 @@
     swayidle.enable = true; # Lock screen
   };
 
-   programs.git = {
-      enable = true;
-      userName = "RealFakeGits";
-      userEmail = "realfakeemailshere82@gmail.com";
-      extraConfig = {
-        init.defaultBranch = "main";
-      };
-    };
+#  programs.sway.xwayland.enable = true;
+  programs.git = {
+     enable = true;
+     userName = "RealFakeGits";
+     userEmail = "realfakeemailshere82@gmail.com";
+     extraConfig = {
+       init.defaultBranch = "main";
+     };
+  };
  
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

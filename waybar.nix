@@ -91,8 +91,8 @@
 
     settings = {
       mainBar = {
-	      layer = top;
-	      position = top;
+	      layer = "top";
+	      position = "top";
 
         modules-left = [
           "sway/workspaces"
@@ -100,13 +100,13 @@
         ];
         modules-center = [
           "custom/left-arrow-dark"
-          "clock1"
+          "clock#1"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
-          "clock2"
+          "clock#2"
           "custom/right-arrow-dark"
           "custom/right-arrow-light"
-          "clock3"
+          "clock#3"
           "custom/right-arrow-dark"
         ];
         modules-right = [
@@ -123,56 +123,56 @@
           "disk"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
-          "disk2"
+          "disk#2"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
-          "disk3"
+          "disk#3"
           "custom/left-arrow-light"
           "custom/left-arrow-dark"
           "tray"
         ];
 
-        custom/left-arrow-dark = {
+       "custom/left-arrow-dark" = {
           format = "";
           tooltip = false;
         };
 
-        custom/left-arrow-light = {
+        "custom/left-arrow-light" = {
           format = "";
           tooltip = false;
         };
 
-        custom/right-arrow-dark = {
+        "custom/right-arrow-dark" = {
           format = "";
           tooltip = false;
         };
 
-        custom/right-arrow-light = {
+        "custom/right-arrow-light" = {
           format = "";
           tooltip = false;
         };
 
-        sway/workspaces = {
+        "sway/workspaces" = {
           disable-scroll = true;
           format = "{name}";
         };
 
-        clock1 = {
+        "clock#1" = {
           format = "{:%a}";
           tooltip = false;
         };
 
-        clock2 = {
+        "clock#2" = {
           format = "{:%H:%M}";
           tooltip = false;
         };
 
-        clock3 = {
+        "clock#3" = {
           format = "{:%m-%d}";
-          tooltip = false
+          tooltip = false;
         };
 
-        pulseaudio = {
+        "pulseaudio" = {
           format = "{icon} {volume:2}%";
           format-bluetooth = "{icon}  {volume}%";
           format-muted = "MUTE";
@@ -185,32 +185,32 @@
           };
           scroll-step = 5;
           on-click = "pamixer -t";
-          on-click-right = "pavucontrol"
+          on-click-right = "pavucontrol";
         };
 
-        memory = {
+        "memory" = {
           interval = 5;
-          format = "Mem {}%"
+          format = "Mem {}%";
         };
 
-        cpu = {
+        "cpu" = {
           interval = 5;
           format = "CPU {usage:2}%";
         };
 
-        disk = {
+        "disk" = {
           interval = 5;
           format = "Root {percentage_used:2}%";
           path = "/";
         };
 
-        disk2 = {
+        "disk#2" = {
           interval = 5;
           format = "M2Data {percentage_used:2}%";
           path = "/home/cbrazell/M2Data";
         };
 
-        disk3 = {
+        "disk#3" = {
           interval = 5;
           format = "2TBM2Data {percentage_used:2}%";
           path = "/home/cbrazell/2TBM2Data";

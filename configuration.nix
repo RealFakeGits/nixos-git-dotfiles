@@ -3,6 +3,7 @@
     imports =
       [ # Include the results of the hardware scan.
         ./hardware-configuration.nix
+        ./flake.nix
       #  ./waybar.nix
       ];
    
@@ -96,9 +97,20 @@
   #    enable = true;
   #  };
 
-  # Steam Enable
+  # Programs Enable
     programs = {
       gamemode.enable = true;
+      
+  # Wireshark Enable
+
+      wireshark = {
+        enable = true;
+        usbmon.enable = true;
+        dumpcap.enable = true;
+      }; 
+
+  # Steam Enable
+
       steam = {
         gamescopeSession.enable = true;
         enable = true;
@@ -123,8 +135,10 @@
   # Virt-manager
     
 #    virtualisation.libvirtd.enable = true;
+
     virtualisation.vmware.host = {
       enable = true;
+      package = pkgs.stable.vmware-workstation;
      # package = pkgs-stable.vmware-workstation;
     };
 
@@ -146,7 +160,6 @@
     services.locate = {
       enable = true;
       package = pkgs.mlocate;
-      localuser = null;
     };
   # User Account
     users.users.cbrazell = {
@@ -159,58 +172,6 @@
 
   # System Wide Pkgs
     environment.systemPackages = [
-#      wgnord
-#      gcc
-#      kitty
-#      wget
-#      git
-#      protonup-qt
-#      waybar
-#      pavucontrol
-#      google-chrome
-#      firefox-wayland
-#      rofi-wayland
-#      neofetch
-#      steam
-#      vesktop
-#      spotify
-#      vim
-      #qimgv
-      #pamixer
-      #prismlauncher
-      #htop
-      #obsidian
-      #google-drive-ocamlfuse
-      #grim
-      #wl-clipboard
-      #slurp
-      #photoflare
-      #neovim
-      #gtk4
-      #corectrl
-      #qalculate-gtk
-      #gamescope
-      #openvpn
-      #adwaita-icon-theme #default cursors
-      #glib 
-      #evince
-      #wireshark
-      #vulkan-tools
-      #file
-      #gzip
-      #zip
-      #unzip
-      #sublime4
-      #swaylock-effects
-      #gamescope
-      #killall
-      #wine
-      #libreoffice
-      #mangohud
-      #protontricks
-      #winetricks
-      #slack
-      #busybox
     ];
 
   # Temperature Controller

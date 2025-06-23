@@ -38,9 +38,10 @@
     ];
   };
 
-  services = {
-    swayidle.enable = true; # Lock screen
-  };
+#  services = {
+#    swayidle.enable = true; # Lock screen
+#  };
+
 
 #  programs.sway.xwayland.enable = true;
   programs.git = {
@@ -102,7 +103,7 @@
 #      adwaita-icon-theme #default cursors
       glib 
       evince
-      wireshark
+#      wireshark
       vulkan-tools
       file
       gzip

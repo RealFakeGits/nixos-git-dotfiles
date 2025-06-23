@@ -1,10 +1,10 @@
 {
 
-  description = "My First Flake";
+#  description = "My First Flake";
    
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";    
+    nixpkgs-stable.url = "github:nixos/nixpkgs/1bde3e8e37a72989d4d455adde764d45f45dc11c";    
      
     home-manager = {
       url = "github:nix-community/home-manager";

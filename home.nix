@@ -8,6 +8,7 @@
     ./sway.nix
     ./fonts.nix
     ./waybar.nix
+    ./browsers.nix
   ];
 
 
@@ -76,9 +77,6 @@
       protonup-qt
       waybar
 #      pavucontrol
-      google-chrome
-      brave
-#      firefox-wayland
       rofi-wayland
       neofetch
       steam
@@ -88,6 +86,7 @@
 #      pamixer
       prismlauncher
       htop
+      signal-desktop
       obsidian
 #      google-drive-ocamlfuse
 #      grim
@@ -103,7 +102,7 @@
 #      adwaita-icon-theme #default cursors
       glib 
       evince
-#      wireshark
+      wireshark
       vulkan-tools
       file
       gzip
@@ -120,6 +119,7 @@
       protontricks
       winetricks
       slack
+      open-vm-tools
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

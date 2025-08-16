@@ -3,40 +3,30 @@
     imports =
       [ # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        ./flake.nix
-      #  ./waybar.nix
+#        ./flake.nix
       ];
-   
-#    overlays = [
-#      import ./overlay/overlays.nix
-#    ];
 
   # Kernel Manual setting for compatibility for DX games
    boot.kernelPackages = pkgs.linuxPackages_latest;
-#  boot.kernelPackages = pkgs.linuxPackagesFor (pkgs.linux_6_6.override {
-#	  argsOverride = rec {
-#		  src = pkgs.fetchurl {
-#              	url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-#              	sha256 = "59+B5YjXD6tew+w7sErFPVHwhg/DsexF4KQWegJomds=";
-#	    };
-#	    version = "6.6.58";
-#	    modDirVersion = "6.6.58";
-#	  };
-#  });
 
   # Use the systemd-boot EFI boot loader.
     boot.loader.systemd-boot = {
       enable = true;
       configurationLimit = 5;
     };
+
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     boot.loader.efi.canTouchEfiVariables = true;
-
-    networking.hostName = "bingbong"; # Define your hostname.
-    networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-  
-  # Smart Card
-    services.pcscd.enable = true;
+    
+    networking = {
+    
+      firewall.enable = false;
+      hostName = "bingbong"; # Define your hostname.
+      networkmanager = {
+        enable = true;  # Easiest to use and most distros use this by default.
+        appendNameservers = [ "1.1.1.1" "9.9.9.9" ];
+      };
+    };
   # Tailscale setup
     services.tailscale.enable = true;
 
@@ -59,6 +49,7 @@
        '';
      };
    };
+
    environment.etc."greetd/environments".text = ''
      sway
    '';
@@ -92,38 +83,24 @@
       ];
     };  
  
-  # SSH Enable
-  #  services.openssh = {
-  #    enable = true;
-  #  };
-
   # Programs Enable
     programs = {
       gamemode.enable = true;
-      
-  # Wireshark Enable
-
       wireshark = {
         enable = true;
-        usbmon.enable = true;
         dumpcap.enable = true;
       }; 
-
-  # Steam Enable
-
       steam = {
         gamescopeSession.enable = true;
         enable = true;
       }; 
-  
-
-  # Sway Enable
-    sway = {
-      xwayland.enable = true;
-      enable = true;
-      package = null; # Because home-manager is user space, we need sway here for sddm 
+      sway = {
+        xwayland.enable = true;
+        enable = true;
+        package = null; # Because home-manager is user space, we need sway here for sddm 
       };              # to be able to see it. So enable sway in home-manager/here and make
     };                # the package null here so it loads the home-manager config.
+
   # Vulkan Support 32/64Bit
     hardware = {
       graphics = {
@@ -132,17 +109,13 @@
       };
     };
 
-  # Virt-manager
-    
-#    virtualisation.libvirtd.enable = true;
-
+  # VMWare
     virtualisation.vmware.host = {
       enable = true;
-      package = pkgs.stable.vmware-workstation;
-     # package = pkgs-stable.vmware-workstation;
+      package = pkgs.vmware-workstation;
     };
 
-    programs.dconf.enable = true;
+  programs.dconf.enable = true;
 
   # Enable sound.
     security.rtkit.enable = true;
@@ -161,80 +134,36 @@
       enable = true;
       package = pkgs.mlocate;
     };
+    services.pcscd = {
+      enable = true;
+      plugins = [ pkgs.opensc pkgs.ccid ];
+    };
+    security.pam.p11.enable = true;
   # User Account
     users.users.cbrazell = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "corectrl" "libvirtd" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "corectrl" "libvirtd" "wireshark" ]; # Enable ‘sudo’ for the user.
       packages = with pkgs; [
         tree
+        pcsc-tools
+        opensc
+        p11-kit
+        web-eid-app
       ];
     }; 
 
   # System Wide Pkgs
-    environment.systemPackages = [
-    ];
+  #  environment.systemPackages = [
+  #  ];
 
   # Temperature Controller
     programs.corectrl.enable = true;
 
   # PAM Swaylock Auth
     security.pam.services.swaylock = {};
-    #console.packages=[ pkgs.iosevka ];
-    #console.font="${pkgs.iosevka}/share
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
-  # List services that you want to enable:
-
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-    networking.firewall.enable = false;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  #  system.copySystemConfiguration = true;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "23.05"; # Did you read the comment?
-
-  # Overlays Go here
-#    nixpkgs.overlays = [
       
-#      (final: prev: {
-#         vmware-workstation = prev.vmware-workstation.overrideAttrs (
-#           old: { src = prev.fetchFromGitHub {
-#             owner = "nixos";
-#             repo = "nixpkgs-unstable";
-#             rev = "1bde3e8e37a72989d4d455adde764d45f45dc11c";
-#             sha256 = "duwsp94fJWmsSb48ApjQKmTKW5Tzvd8f4Hd44Ge/P5Y=";
-#           }; }
-#         );
-#       })
-#     ];    
-
-#     (self: super: { 
-#	 discord = super.discord.overrideAttrs (
-#	   _: { src = builtins.fetchTarball {
-#	     url = "https://www.discord.com/api/download?platform=linux&format=tar.gz";
-#         }; }
-#         );      
-#       })
-#    ];
-
     nix = { 
       package = pkgs.nix;
       settings.experimental-features = [ "nix-command" "flakes" ];
